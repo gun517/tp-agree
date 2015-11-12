@@ -1,0 +1,7 @@
+<H1>댓글 수정</H1>
+<p><%=@edit.id%>번째 댓글</p>
+<%=form_tag 'update' do%>
+        <input type="hidden" name="id" value="<%=@edit.id%>">
+        <input type="text" name="comment" value="<%=@edit.msg%>">
+        <input type="submit">
+<% end %>

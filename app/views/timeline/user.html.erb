@@ -1,0 +1,67 @@
+<H1><%= @uu.email %>의 Timeline</H1>
+
+
+
+
+<%=form_tag 'write', method: 'post' do%>
+<div class="form-group">
+    <textarea name="naeyong" class="form-control" row="3"></textarea>
+    </div>
+    <div class="form-group">
+    <input type="submit" class="btn btn-success">
+     </div>
+<% end %>
+
+<br>
+
+  <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span style="font-size: 18pt;">유저별로 모아보기</span><span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            
+            <% @users = User.all %>
+            <% @users.each do |a| %>
+            <li><a href="/timeline/user?email=<%=a.email%>"><%= a.email%>
+            <input type="hidden" name="email" value="<%=a.email%>">
+            </a></li>
+            <% end %>
+            
+          </ul>
+        </li>
+<br>
+
+<ul>
+    <% @blogs.each do |b| %>
+    
+    <% if b.user.email == @uu.email %>
+    <li>
+        <p class="bg-info"><%=b.user.email%> :</p>
+    <div class="well">
+    <%=b.content%>
+    </div>
+    
+        <%=form_tag 'comment', class: "form-inline" do%>
+        <input type="hidden" name="blog_id" value="<%=b.id%>">
+        <div class="form-group">
+            <input type="text" name="comment" class="form-control">
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary">
+        </div>
+        <% end %>
+        
+        <ol>
+        <% b.comments.each do |c| %>
+            <li><%=c.user.email%> : <%=c.msg%>
+            <a href="/timeline/edit?id=<%=c.id%>">수정</a>
+            <a href="/timeline/destroy?id=<%=c.id%>">삭제</a>
+            </li>
+        <% end %>
+        </ol>
+    </li>
+
+        <% else %>
+        <% end %>
+    
+    
+    <% end %>
+</ul>
